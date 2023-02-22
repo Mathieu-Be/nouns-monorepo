@@ -3,7 +3,7 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { NounSeed, NounData } from './types';
 import { images, bgcolors } from './image-data.json';
 
-const { bodies, accessories, heads, glasses } = images;
+const { bodies, heads } = images;
 
 type ObjectKey = keyof typeof images;
 
@@ -13,12 +13,7 @@ type ObjectKey = keyof typeof images;
  */
 export const getNounData = (seed: NounSeed): NounData => {
   return {
-    parts: [
-      bodies[seed.body],
-      accessories[seed.accessory],
-      heads[seed.head],
-      glasses[seed.glasses],
-    ],
+    parts: [bodies[seed.body], heads[seed.head]],
     background: bgcolors[seed.background],
   };
 };
@@ -31,9 +26,7 @@ export const getRandomNounSeed = (): NounSeed => {
   return {
     background: Math.floor(Math.random() * bgcolors.length),
     body: Math.floor(Math.random() * bodies.length),
-    accessory: Math.floor(Math.random() * accessories.length),
     head: Math.floor(Math.random() * heads.length),
-    glasses: Math.floor(Math.random() * glasses.length),
   };
 };
 
@@ -79,9 +72,7 @@ export const getNounSeedFromBlockHash = (nounId: BigNumberish, blockHash: string
   return {
     background: getPseudorandomPart(pseudorandomness, bgcolors.length, 0),
     body: getPseudorandomPart(pseudorandomness, bodies.length, 48),
-    accessory: getPseudorandomPart(pseudorandomness, accessories.length, 96),
-    head: getPseudorandomPart(pseudorandomness, heads.length, 144),
-    glasses: getPseudorandomPart(pseudorandomness, glasses.length, 192),
+    head: getPseudorandomPart(pseudorandomness, heads.length, 96),
   };
 };
 
