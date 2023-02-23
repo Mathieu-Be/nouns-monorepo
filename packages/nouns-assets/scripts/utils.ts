@@ -11,9 +11,12 @@ export const readPngImage = async (path: string): Promise<PngImage> => {
   const png = PNG.sync.read(buffer);
 
   return {
-    width: png.width,
-    height: png.height,
+    width: png.width / 20,
+    height: png.height / 20,
     rgbaAt: (x: number, y: number) => {
+      x = x * 20;
+      y = y * 20;
+
       const idx = (png.width * y + x) << 2;
       const [r, g, b, a] = [png.data[idx], png.data[idx + 1], png.data[idx + 2], png.data[idx + 3]];
       return {
