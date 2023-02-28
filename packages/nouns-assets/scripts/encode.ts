@@ -9,6 +9,7 @@ const encode = async () => {
   const encoder = new PNGCollectionEncoder();
 
   const partfolders = [
+    '0-backgrounds',
     '1-bodies',
     '2-pants',
     '3-shoes',
@@ -31,7 +32,6 @@ const encode = async () => {
     DESTINATION,
     JSON.stringify(
       {
-        bgcolors: ['E2D8CB', '7D97AF', '92C6AE'],
         ...encoder.data,
       },
       null,
