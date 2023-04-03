@@ -1,5 +1,5 @@
 export interface IEncoder {
-  encodeImage(filename: string, image: unknown): string;
+  encodeImage(filename: string, imageType: string, image: unknown): string;
 }
 
 export interface Rect {
@@ -41,6 +41,7 @@ export interface DecodedImage {
 
 export interface EncodedImage {
   filename: string;
+  brotherhood: string;
   data: string;
 }
 

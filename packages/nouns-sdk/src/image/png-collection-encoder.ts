@@ -10,6 +10,7 @@ export class PNGCollectionEncoder implements IEncoder {
   private readonly _transparent: [string, number] = ['', 0];
   private _colors: Map<string, number> = new Map([this._transparent]);
   private _images: Map<string, string> = new Map();
+  private _brotherhoods: Map<string, string> = new Map();
   private _folders: { [name: string]: string[] } = {};
 
   constructor(colors?: string[]) {
@@ -37,11 +38,12 @@ export class PNGCollectionEncoder implements IEncoder {
    * @param png The png image data
    * @param folder An optional containing folder name
    */
-  public encodeImage(name: string, png: PngImage, folder?: string): string {
+  public encodeImage(name: string, brotherhood: string, png: PngImage, folder?: string): string {
     const image = new Image(png.width, png.height, png.rgbaAt);
     const rle = image.toRLE(this._colors);
 
     this._images.set(name, rle);
+    this._brotherhoods.set(name, brotherhood);
 
     if (folder) {
       (this._folders[folder] ||= []).push(name);
@@ -64,6 +66,7 @@ export class PNGCollectionEncoder implements IEncoder {
    */
   private format(flatten = false) {
     const images = new Map(this._images);
+    const brotherhoods = new Map(this._brotherhoods);
     const folders = Object.entries(this._folders);
 
     let data: Record<string, EncodedImage[]> = {};
@@ -75,6 +78,7 @@ export class PNGCollectionEncoder implements IEncoder {
         filenames.forEach(filename => {
           result[folder].push({
             filename,
+            brotherhood: brotherhoods.get(filename) as string,
             data: images.get(filename) as string,
           });
           images.delete(filename);
@@ -88,6 +92,7 @@ export class PNGCollectionEncoder implements IEncoder {
     if (images.size) {
       data.root = [...images.entries()].map(([filename, data]) => ({
         filename,
+        brotherhood: '',
         data,
       }));
     }

@@ -75,7 +75,7 @@ export class Image {
 
     for (let i = 1; i < data.length; i++) {
       if (data[i] !== previous || count === 255) {
-        encoding.push(toPaddedHex(count), toPaddedHex(previous));
+        encoding.push(toPaddedHex(count), toPaddedHex(previous, 4));
         this.tuples.push([count, previous]);
         count = 1;
         previous = data[i];
@@ -85,7 +85,7 @@ export class Image {
     }
 
     if (previous !== undefined) {
-      encoding.push(toPaddedHex(count), toPaddedHex(previous));
+      encoding.push(toPaddedHex(count), toPaddedHex(previous, 4));
     }
     return encoding.join('');
   }
