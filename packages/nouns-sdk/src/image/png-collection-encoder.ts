@@ -10,7 +10,6 @@ export class PNGCollectionEncoder implements IEncoder {
   private readonly _transparent: [string, number] = ['', 0];
   private _colors: Map<string, number> = new Map([this._transparent]);
   private _images: Map<string, string> = new Map();
-  private _brotherhoods: Map<string, string> = new Map();
   private _folders: { [name: string]: string[] } = {};
 
   constructor(colors?: string[]) {
@@ -42,11 +41,11 @@ export class PNGCollectionEncoder implements IEncoder {
     const image = new Image(png.width, png.height, png.rgbaAt);
     const rle = image.toRLE(this._colors);
 
-    this._images.set(name, rle);
-    this._brotherhoods.set(name, brotherhood);
+    const imageName = brotherhood + '/' + name;
+    this._images.set(imageName, rle);
 
     if (folder) {
-      (this._folders[folder] ||= []).push(name);
+      (this._folders[folder] ||= []).push(imageName);
     }
 
     return rle;
@@ -66,7 +65,6 @@ export class PNGCollectionEncoder implements IEncoder {
    */
   private format(flatten = false) {
     const images = new Map(this._images);
-    const brotherhoods = new Map(this._brotherhoods);
     const folders = Object.entries(this._folders);
 
     let data: Record<string, EncodedImage[]> = {};
@@ -76,9 +74,11 @@ export class PNGCollectionEncoder implements IEncoder {
 
         // Write all files to the folder, delete from the Map once written.
         filenames.forEach(filename => {
+          const separator = filename.indexOf('/');
+
           result[folder].push({
-            filename,
-            brotherhood: brotherhoods.get(filename) as string,
+            filename: filename.slice(separator + 1),
+            brotherhood: filename.slice(0, separator),
             data: images.get(filename) as string,
           });
           images.delete(filename);

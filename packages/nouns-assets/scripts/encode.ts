@@ -1,44 +1,59 @@
-import { PNGCollectionEncoder, PngImage } from '@nouns/sdk';
+import { PNGCollectionEncoder } from '@nouns/sdk';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { readPngImage } from './utils';
 
 const DESTINATION = path.join(__dirname, '../src/image-data.json');
 
+const partfolders = [
+  '0-hundreds',
+  '1-luminaries',
+  '2-backgrounds',
+  '3-bodies',
+  '4-shoes',
+  '5-pants',
+  '6-shirts',
+  '7-beards',
+  '8-hairs_caps_heads',
+  '9-eye_accessories',
+  '10-accessories',
+  '11-emblems',
+];
+
+const brotherhoodfolders = [
+  'academics',
+  'athletes',
+  'creatives',
+  'gentlemen',
+  'heroes',
+  'magic',
+  'musicians',
+  'outlaws',
+  'warriors',
+  'worship',
+];
+
 const encode = async () => {
   const encoder = new PNGCollectionEncoder();
-
-  const partfolders = [
-    '0-background',
-    '1-body',
-    '2-shoes',
-    '3-pants',
-    '4-shirt',
-    '5-beard',
-    '6-hair_cap_head',
-    '7-eye_accessory',
-    '8-accessories',
-    '9-specials',
-    '10-uniques',
-  ];
-
-  const brotherhoodfolders = [
-    'Academics',
-    'Athletes',
-    'Creatives',
-    'Gentlemans',
-    'Magical Beings',
-    'Military',
-    'Musicians',
-    'Outlaws',
-    'Religious',
-    'Superheros',
-  ];
 
   for (const folder of partfolders) {
     const folderpath = path.join(__dirname, '../images', folder);
 
-    if (folder == '9-specials') {
+    // The Hundreds are not in brotherhood folders
+    if (folder == '0-hundreds') {
+      const files = await fs.readdir(folderpath);
+
+      for (const file of files.filter(file => file !== '.DS_Store')) {
+        const image = await readPngImage(path.join(folderpath, file));
+
+        encoder.encodeImage(
+          file.replace(/\.png$/, ''),
+          'None',
+          image,
+          folder.replace(/^\d{1,2}-/, ''),
+        );
+      }
+    } else {
       for (const subfolder of brotherhoodfolders) {
         const subfolderpath = path.join(folderpath, subfolder);
         const files = await fs.readdir(subfolderpath);
@@ -49,17 +64,9 @@ const encode = async () => {
             file.replace(/\.png$/, ''),
             subfolder,
             image,
-            folder.replace(/^\d-/, ''),
+            folder.replace(/^\d{1,2}-/, ''),
           );
         }
-      }
-    } else {
-      const files = await fs.readdir(folderpath);
-
-      for (const file of files.filter(file => file !== '.DS_Store')) {
-        const image = await readPngImage(path.join(folderpath, file));
-
-        encoder.encodeImage(file.replace(/\.png$/, ''), 'None', image, folder.replace(/^\d-/, ''));
       }
     }
   }
