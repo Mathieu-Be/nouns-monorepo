@@ -41,7 +41,7 @@ export class PNGCollectionEncoder implements IEncoder {
     const image = new Image(png.width, png.height, png.rgbaAt);
     const rle = image.toRLE(this._colors);
 
-    const imageName = brotherhood + '/' + name;
+    const imageName = folder + '/' + brotherhood + '/' + name;
     this._images.set(imageName, rle);
 
     if (folder) {
@@ -74,11 +74,16 @@ export class PNGCollectionEncoder implements IEncoder {
 
         // Write all files to the folder, delete from the Map once written.
         filenames.forEach(filename => {
-          const separator = filename.indexOf('/');
+          const separator1 = filename.indexOf('/');
+          const separator2 = filename.indexOf('/', separator1 + 1);
+
+          if (!images.get(filename)) {
+            console.log(filename);
+          }
 
           result[folder].push({
-            filename: filename.slice(separator + 1),
-            brotherhood: filename.slice(0, separator),
+            filename: filename.slice(separator2 + 1),
+            brotherhood: filename.slice(separator1 + 1, separator2),
             data: images.get(filename) as string,
           });
           images.delete(filename);
