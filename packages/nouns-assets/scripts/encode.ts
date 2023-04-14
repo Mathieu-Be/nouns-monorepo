@@ -17,7 +17,7 @@ const partfolders = [
   '8-hairs_caps_heads',
   '9-eye_accessories',
   '10-accessories',
-  '11-emblems',
+  '11-houses',
 ];
 
 const brotherhoodfolders = [

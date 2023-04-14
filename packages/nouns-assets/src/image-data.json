@@ -16046,54 +16046,54 @@
         "brotherhood": "worship"
       }
     ],
-    "emblems": [
+    "houses": [
       {
-        "filename": "6",
+        "filename": "Academics",
         "brotherhood": "academics",
         "data": "0x0028182b150102d50300000102d50200000102d50200000202d5"
       },
       {
-        "filename": "2",
+        "filename": "Athletes",
         "brotherhood": "athletes",
         "data": "0x0029192a14020828020000010828010000010828020000010828"
       },
       {
-        "filename": "7",
+        "filename": "Creatives",
         "brotherhood": "creatives",
         "data": "0x0029192b160109ed0208280109ed0108280200000109ed010000"
       },
       {
-        "filename": "3",
+        "filename": "Gentlemen",
         "brotherhood": "gentlemen",
         "data": "0x00291929140102d50100000302d5"
       },
       {
-        "filename": "10",
+        "filename": "Heroes",
         "brotherhood": "heroes",
         "data": "0x0028192b150101cc0200000101cc0100000101cc012a600200000101cc012a600200000101cc022a60"
       },
       {
-        "filename": "1",
+        "filename": "Magic",
         "brotherhood": "magic",
         "data": "0x0029182917010d8b"
       },
       {
-        "filename": "8",
+        "filename": "Musicians",
         "brotherhood": "musicians",
         "data": "0x0028182b150200000101cb0300000101cb0400000101cb"
       },
       {
-        "filename": "5",
+        "filename": "Outlaws",
         "brotherhood": "outlaws",
         "data": "0x0028192b150100000202d50500000102d50200000102d50100000202d5010000"
       },
       {
-        "filename": "4",
+        "filename": "Warriors",
         "brotherhood": "warriors",
         "data": "0x0028192b140200000101cb0300000101cb0100000101cb0600000101cb0300000101cb"
       },
       {
-        "filename": "9",
+        "filename": "Worship",
         "brotherhood": "worship",
         "data": "0x00291a2b140100000101fe0100000201fe0100000101fe0100000101fe0200000101fe0100000101fe0200000101fe010000"
       }
