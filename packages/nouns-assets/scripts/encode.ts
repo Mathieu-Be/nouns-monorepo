@@ -1,4 +1,4 @@
-import { PNGCollectionEncoder } from '@nouns/sdk';
+import { PNGCollectionEncoder, EncodedImage } from '@nouns/sdk';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { readPngImage } from './utils';
@@ -70,11 +70,25 @@ const encode = async () => {
     }
   }
 
+  // Get emblem SVGs
+  const emblemFolder = path.join(__dirname, '../images/11-emblems/svg');
+  const emblems = [];
+
+  for (const botherhood of brotherhoodfolders) {
+    const svg = await fs.readFile(path.join(emblemFolder, `${botherhood}.svg`), 'utf8');
+
+    emblems.push({
+      brotherhood: botherhood,
+      data: Buffer.from(svg.replace(/\r?\n|\r/g, '')).toString('base64'),
+    });
+  }
+
   await fs.writeFile(
     DESTINATION,
     JSON.stringify(
       {
         ...encoder.data,
+        emblems,
       },
       null,
       2,
