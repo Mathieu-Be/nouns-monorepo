@@ -11,8 +11,10 @@ export class PNGCollectionEncoder implements IEncoder {
   private _colors: Map<string, number> = new Map([this._transparent]);
   private _images: Map<string, string> = new Map();
   private _folders: { [name: string]: string[] } = {};
+  private _paletteIndex: number;
 
-  constructor(colors?: string[]) {
+  constructor(paletteIndex: number, colors?: string[]) {
+    this._paletteIndex = paletteIndex;
     // Optionally pre-populate colors with an existing palette
     colors?.forEach((color, index) => this._colors.set(color, index));
   }
@@ -39,7 +41,7 @@ export class PNGCollectionEncoder implements IEncoder {
    */
   public encodeImage(name: string, brotherhood: string, png: PngImage, folder?: string): string {
     const image = new Image(png.width, png.height, png.rgbaAt);
-    const rle = image.toRLE(this._colors);
+    const rle = image.toRLE(this._colors, this._paletteIndex);
 
     const imageName = folder + '/' + brotherhood + '/' + name;
     this._images.set(imageName, rle);

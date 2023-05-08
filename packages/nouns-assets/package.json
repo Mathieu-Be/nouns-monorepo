@@ -8,9 +8,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "encode": "ts-node scripts/encode.ts",
-    "encode-more": "ts-node scripts/encode-more.ts",
-    "append-image-data": "ts-node scripts/append-image-data.ts",
+    "encode-luminaries": "ts-node scripts/encode-luminaries.ts",
+    "encode-hundreds": "ts-node scripts/encode-hundreds.ts",
     "transform-emblems": "ts-node scripts/transform-emblems.ts",
     "clean": "rimraf dist tsconfig.build.tsbuildinfo",
     "build": "tsc -p tsconfig.build.json",

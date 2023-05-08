@@ -1,12 +1,11 @@
-import { PNGCollectionEncoder, EncodedImage } from '@nouns/sdk';
+import { PNGCollectionEncoder } from '@nouns/sdk';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { readPngImage } from './utils';
 
-const DESTINATION = path.join(__dirname, '../src/image-data.json');
+const DESTINATION = path.join(__dirname, '../src/luminaries-data.json');
 
 const partfolders = [
-  '0-hundreds',
   '1-luminaries',
   '2-backgrounds',
   '3-bodies',
@@ -33,39 +32,23 @@ const brotherhoodfolders = [
 ];
 
 const encode = async () => {
-  const encoder = new PNGCollectionEncoder();
+  const encoder = new PNGCollectionEncoder(2);
 
   for (const folder of partfolders) {
     const folderpath = path.join(__dirname, '../images', folder);
 
-    // The Hundreds are not in brotherhood folders
-    if (folder == '0-hundreds') {
-      const files = await fs.readdir(folderpath);
+    for (const subfolder of brotherhoodfolders) {
+      const subfolderpath = path.join(folderpath, subfolder);
+      const files = await fs.readdir(subfolderpath);
 
       for (const file of files.filter(file => file !== '.DS_Store')) {
-        const image = await readPngImage(path.join(folderpath, file));
-
+        const image = await readPngImage(path.join(subfolderpath, file));
         encoder.encodeImage(
           file.replace(/\.png$/, ''),
-          'None',
+          subfolder,
           image,
           folder.replace(/^\d{1,2}-/, ''),
         );
-      }
-    } else {
-      for (const subfolder of brotherhoodfolders) {
-        const subfolderpath = path.join(folderpath, subfolder);
-        const files = await fs.readdir(subfolderpath);
-
-        for (const file of files.filter(file => file !== '.DS_Store')) {
-          const image = await readPngImage(path.join(subfolderpath, file));
-          encoder.encodeImage(
-            file.replace(/\.png$/, ''),
-            subfolder,
-            image,
-            folder.replace(/^\d{1,2}-/, ''),
-          );
-        }
       }
     }
   }
@@ -82,6 +65,8 @@ const encode = async () => {
       data: Buffer.from(svg.replace(/\r?\n|\r/g, '')).toString('base64'),
     });
   }
+
+  console.log(`Palette has ${encoder.data.palette.length} colors`);
 
   await fs.writeFile(
     DESTINATION,

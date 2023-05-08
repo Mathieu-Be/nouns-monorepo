@@ -33,7 +33,7 @@ export class Image {
     return this._bounds;
   }
 
-  public toRLE(colors: Map<string, number>): string {
+  public toRLE(colors: Map<string, number>, paletteIndex: number): string {
     this._bounds = this.calcBounds();
 
     const indexes: number[] = [];
@@ -55,7 +55,7 @@ export class Image {
 
     // [palette_index, top, right, bottom, left]
     const metadata = [
-      0,
+      paletteIndex,
       this.bounds.top,
       this.bounds.right,
       this.bounds.bottom,
