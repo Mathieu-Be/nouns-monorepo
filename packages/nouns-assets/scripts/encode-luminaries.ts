@@ -66,6 +66,24 @@ const encode = async () => {
     });
   }
 
+  // Get luminaries metadata
+  const metadataFolder = path.join(__dirname, '../images/13-luminaries-metadata');
+  const metadatas = [];
+
+  for (const botherhood of brotherhoodfolders) {
+    const metadataFiles = await fs.readdir(path.join(metadataFolder, botherhood));
+
+    for (const file of metadataFiles) {
+      const metadata = await fs.readFile(path.join(metadataFolder, botherhood, file), 'utf8');
+
+      metadatas.push({
+        filename: file.replace(/\.json$/, ''),
+        brotherhood: botherhood,
+        data: metadata,
+      });
+    }
+  }
+
   console.log(`Palette has ${encoder.data.palette.length} colors`);
 
   await fs.writeFile(
@@ -74,6 +92,7 @@ const encode = async () => {
       {
         ...encoder.data,
         emblems,
+        metadatas,
       },
       null,
       2,

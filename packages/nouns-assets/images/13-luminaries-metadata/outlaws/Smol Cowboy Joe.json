@@ -1,0 +1,46 @@
+[
+  {
+    "trait_type": "House",
+    "value": "Outlaws"
+  },
+  {
+    "trait_type": "Rarity",
+    "value": "Luminary"
+  },
+  {
+    "trait_type": "Background",
+    "value": "Dusty Orange"
+  },
+  {
+    "trait_type": "Body",
+    "value": "Tan"
+  },
+  {
+    "trait_type": "Shoes",
+    "value": "Cowboy Shoes"
+  },
+  {
+    "trait_type": "Pants",
+    "value": "Cowboy Ranglers"
+  },
+  {
+    "trait_type": "Shirt",
+    "value": "Cowboy Vest"
+  },
+  {
+    "trait_type": "Beard",
+    "value": "Brown"
+  },
+  {
+    "trait_type": "Headwear",
+    "value": "Cowboy Hat"
+  },
+  {
+    "trait_type": "Eyewear",
+    "value": "None"
+  },
+  {
+    "trait_type": "Accessory",
+    "value": "Lasso"
+  }
+]

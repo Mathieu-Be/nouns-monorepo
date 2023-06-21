@@ -1,0 +1,46 @@
+[
+  {
+    "trait_type": "House",
+    "value": "Heroes"
+  },
+  {
+    "trait_type": "Rarity",
+    "value": "Luminary"
+  },
+  {
+    "trait_type": "Background",
+    "value": "Heroic Haze"
+  },
+  {
+    "trait_type": "Body",
+    "value": "White"
+  },
+  {
+    "trait_type": "Shoes",
+    "value": "Tall Black Boots"
+  },
+  {
+    "trait_type": "Pants",
+    "value": "Gold Super Pants"
+  },
+  {
+    "trait_type": "Shirt",
+    "value": "Bat Suit"
+  },
+  {
+    "trait_type": "Beard",
+    "value": "White"
+  },
+  {
+    "trait_type": "Headwear",
+    "value": "Bat Mask"
+  },
+  {
+    "trait_type": "Eyewear",
+    "value": "None"
+  },
+  {
+    "trait_type": "Accessory",
+    "value": "Batarang"
+  }
+]
