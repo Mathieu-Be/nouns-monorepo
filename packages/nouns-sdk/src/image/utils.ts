@@ -16,3 +16,14 @@ export const toPaddedHex = (c: number, pad = 2): string => {
 export const rgbToHex = (r: number, g: number, b: number): string => {
   return `${toPaddedHex(r)}${toPaddedHex(g)}${toPaddedHex(b)}`;
 };
+
+/**
+ * Convert an RGB color to hex (without `#` prefix)
+ * @param r The red value
+ * @param g The green value
+ * @param b The blue value
+ * @param a The alpha value
+ */
+export const rgabToHex = (r: number, g: number, b: number, a: number): string => {
+  return `${toPaddedHex(r)}${toPaddedHex(g)}${toPaddedHex(b)}${toPaddedHex(a)}`;
+};

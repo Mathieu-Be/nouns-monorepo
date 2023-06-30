@@ -53,7 +53,7 @@ const encode = async () => {
     }
   }
 
-  // Get emblem SVGs
+  // Get emblems SVGs
   const emblemFolder = path.join(__dirname, '../images/11-emblems/svg');
   const emblems = [];
 
@@ -61,6 +61,20 @@ const encode = async () => {
     const svg = await fs.readFile(path.join(emblemFolder, `${botherhood}.svg`), 'utf8');
 
     emblems.push({
+      brotherhood: botherhood,
+      data: Buffer.from(svg.replace(/\r?\n|\r/g, '')).toString('base64'),
+    });
+  }
+
+  // Get glowing emblems SVGs
+  const glowingEmblemFolder = path.join(__dirname, '../images/12-glowing-emblems/svg');
+  const glowingEmblems = [];
+
+  for (const botherhood of brotherhoodfolders) {
+    // const svg = await fs.readFile(path.join(glowingEmblemFolder, `Worship.svg`), 'utf8');
+    const svg = await fs.readFile(path.join(glowingEmblemFolder, `${botherhood}.svg`), 'utf8');
+
+    glowingEmblems.push({
       brotherhood: botherhood,
       data: Buffer.from(svg.replace(/\r?\n|\r/g, '')).toString('base64'),
     });
@@ -92,6 +106,7 @@ const encode = async () => {
       {
         ...encoder.data,
         emblems,
+        glowingEmblems,
         metadatas,
       },
       null,
